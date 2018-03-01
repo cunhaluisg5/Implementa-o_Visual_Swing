@@ -5,6 +5,10 @@
  */
 package Forms;
 
+import Classes.Automovel;
+import java.util.Enumeration;
+import javax.swing.JRadioButton;
+
 /**
  *
  * @author alunoces
@@ -82,6 +86,11 @@ public class FormPrincipal extends javax.swing.JFrame {
         btAdicionar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btAdicionar.setText("Adicionar");
         btAdicionar.setName("btAdicionar"); // NOI18N
+        btAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAdicionarActionPerformed(evt);
+            }
+        });
 
         lbDataFabricacao.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lbDataFabricacao.setText("Data de Fabricação");
@@ -323,6 +332,28 @@ public class FormPrincipal extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(420, 544));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
+        Automovel auto = new Automovel();
+        
+        auto.setPlaca(tfPlaca.getText());
+        auto.setModelo(tfModelo.getText());
+        auto.setDataFabricacao(tfDataFabricacao.getText());
+        auto.setValorBasico(Float.parseFloat(tfValorBasico.getText()));
+        auto.setMotor((String) cbMotor.getSelectedItem());
+        
+        JRadioButton radio;
+        Enumeration jr = buttonGroup1.getElements();
+        while(jr.hasMoreElements())
+        {
+            radio = (JRadioButton)jr.nextElement();
+            if(radio.isSelected())
+            {
+                auto.setCategoria(radio.getText());
+            }
+        }
+        
+    }//GEN-LAST:event_btAdicionarActionPerformed
 
     /**
      * @param args the command line arguments
