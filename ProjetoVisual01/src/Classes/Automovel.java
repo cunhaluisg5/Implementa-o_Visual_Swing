@@ -84,7 +84,7 @@ public class Automovel {
         return imposto;
     }
     
-    public double valorTotalVeiculo(int taxa) {
+    public float valorTotalVeiculo(int taxa) {
         float total;
         total = (valorBasico * 1.05f) + calcularImposto(taxa);
         return total;

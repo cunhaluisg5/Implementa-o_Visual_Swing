@@ -6,8 +6,11 @@
 package Forms;
 
 import Classes.Automovel;
+import java.awt.Component;
 import java.util.Enumeration;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.JPanel;
 
 /**
  *
@@ -15,9 +18,8 @@ import javax.swing.JRadioButton;
  */
 public class FormPrincipal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FormPrincipal
-     */
+    Automovel auto;
+    
     public FormPrincipal() {
         initComponents();
     }
@@ -60,6 +62,7 @@ public class FormPrincipal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         taDadosAutomovel = new javax.swing.JTextArea();
         btExibir = new javax.swing.JButton();
+        lbMensagem = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Controle de Automóveis");
@@ -112,7 +115,7 @@ public class FormPrincipal extends javax.swing.JFrame {
         tfValorBasico.setName("tfValorBasico"); // NOI18N
 
         pnCategoria.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Categoria", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
-        pnCategoria.setName("pnCategoria"); // NOI18N
+        pnCategoria.setName(""); // NOI18N
 
         buttonGroup1.add(rbPasseio);
         rbPasseio.setText("Passeio");
@@ -131,7 +134,7 @@ public class FormPrincipal extends javax.swing.JFrame {
         pnCategoriaLayout.setHorizontalGroup(
             pnCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnCategoriaLayout.createSequentialGroup()
-                .addComponent(rbPasseio, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rbPasseio, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(rbUtilitario)
                 .addGap(79, 79, 79)
@@ -157,11 +160,21 @@ public class FormPrincipal extends javax.swing.JFrame {
         btCalculoValorTotal.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btCalculoValorTotal.setText("Calcular Valor Total");
         btCalculoValorTotal.setName("btCalculoValorTotal"); // NOI18N
+        btCalculoValorTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCalculoValorTotalActionPerformed(evt);
+            }
+        });
 
         btLimpar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btLimpar.setForeground(new java.awt.Color(255, 0, 0));
         btLimpar.setText("Limpar");
         btLimpar.setName("btLimpar"); // NOI18N
+        btLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLimparActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -169,6 +182,7 @@ public class FormPrincipal extends javax.swing.JFrame {
         lbImpostoPagar.setText("Imposto a Pagar");
         lbImpostoPagar.setName("lbImpostoPagar"); // NOI18N
 
+        tfImpostoPagar.setEditable(false);
         tfImpostoPagar.setBackground(new java.awt.Color(204, 204, 204));
         tfImpostoPagar.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(102, 153, 255), null));
         tfImpostoPagar.setName("tfImpostoPagar"); // NOI18N
@@ -177,6 +191,7 @@ public class FormPrincipal extends javax.swing.JFrame {
         lbValorTotalCompra.setText("Valor total de compra");
         lbValorTotalCompra.setName("lbValorTotalCompra"); // NOI18N
 
+        tfValorTotalCompra.setEditable(false);
         tfValorTotalCompra.setBackground(new java.awt.Color(204, 204, 204));
         tfValorTotalCompra.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(102, 153, 255), null));
         tfValorTotalCompra.setName("tfValorTotalCompra"); // NOI18N
@@ -231,6 +246,15 @@ public class FormPrincipal extends javax.swing.JFrame {
         btExibir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btExibir.setText("Exibir");
         btExibir.setName("btExibir"); // NOI18N
+        btExibir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExibirActionPerformed(evt);
+            }
+        });
+
+        lbMensagem.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lbMensagem.setForeground(new java.awt.Color(0, 51, 255));
+        lbMensagem.setName("lbMensagem"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -238,52 +262,56 @@ public class FormPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btExibir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(btExibir)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(24, 24, 24)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lbPlaca)
+                                    .addGap(46, 46, 46)
+                                    .addComponent(lbModelo))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lbAliquotaImposto)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(tfAliquotaImposto, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                                        .addComponent(btCalculoValorTotal)
+                                        .addGap(26, 26, 26)
+                                        .addComponent(btLimpar))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(tfPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(tfModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(30, 30, 30)
+                                        .addComponent(btAdicionar))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lbDataFabricacao, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(tfDataFabricacao, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(30, 30, 30)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lbMotor)
+                                            .addComponent(cbMotor, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(33, 33, 33)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lbValorBasico)
+                                            .addComponent(tfValorBasico)))
+                                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(pnCategoria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbPlaca)
-                                .addGap(46, 46, 46)
-                                .addComponent(lbModelo))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(lbAliquotaImposto)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addGap(10, 10, 10)
-                                    .addComponent(tfAliquotaImposto, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btCalculoValorTotal)
-                                    .addGap(26, 26, 26)
-                                    .addComponent(btLimpar))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(tfPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(tfModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(30, 30, 30)
-                                    .addComponent(btAdicionar))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lbDataFabricacao, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(tfDataFabricacao, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(30, 30, 30)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lbMotor)
-                                        .addComponent(cbMotor, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(33, 33, 33)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lbValorBasico)
-                                        .addComponent(tfValorBasico)))
-                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(pnCategoria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addGap(92, 92, 92)
+                        .addComponent(lbMensagem)))
+                .addContainerGap(32, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(lbDadosAutomovel)
-                .addGap(61, 61, 61))
+                .addGap(65, 65, 65))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -320,27 +348,29 @@ public class FormPrincipal extends javax.swing.JFrame {
                         .addComponent(btCalculoValorTotal)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
+                .addGap(3, 3, 3)
+                .addComponent(lbMensagem)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(lbDadosAutomovel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btExibir))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btExibir, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(29, 29, 29))
         );
 
-        setSize(new java.awt.Dimension(420, 544));
+        setSize(new java.awt.Dimension(439, 560));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
-        Automovel auto = new Automovel();
+        auto = new Automovel();
         
         auto.setPlaca(tfPlaca.getText());
         auto.setModelo(tfModelo.getText());
         auto.setDataFabricacao(tfDataFabricacao.getText());
         auto.setValorBasico(Float.parseFloat(tfValorBasico.getText()));
-        auto.setMotor((String) cbMotor.getSelectedItem());
+        auto.setMotor(cbMotor.getSelectedItem().toString());
         
         JRadioButton radio;
         Enumeration jr = buttonGroup1.getElements();
@@ -352,8 +382,55 @@ public class FormPrincipal extends javax.swing.JFrame {
                 auto.setCategoria(radio.getText());
             }
         }
-        
+        lbMensagem.setText("Automóvel cadastrado com sucesso!");
     }//GEN-LAST:event_btAdicionarActionPerformed
+
+    private void btExibirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExibirActionPerformed
+        taDadosAutomovel.setText(auto.toString());
+    }//GEN-LAST:event_btExibirActionPerformed
+
+    private void btCalculoValorTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCalculoValorTotalActionPerformed
+        int aliq = Integer.parseInt(tfAliquotaImposto.getText());
+         float imposto;
+         float total;
+         
+         //fazendo os calculos necessários
+         imposto = auto.calcularImposto(aliq);
+         total = auto.valorTotalVeiculo(aliq);
+         
+         //colocando nos campos na interface
+         tfImpostoPagar.setText(Float.toString(imposto));
+         tfValorTotalCompra.setText(Float.toString(total));
+    }//GEN-LAST:event_btCalculoValorTotalActionPerformed
+
+    private void btLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimparActionPerformed
+        buttonGroup1.clearSelection();
+        cbMotor.setSelectedIndex(-1);
+        taDadosAutomovel.setText("");
+        
+        for(int i=0; i<getContentPane().getComponentCount(); i++)
+        {
+            Component c = getContentPane().getComponent(i);
+            if(c instanceof JTextField)
+            {
+                JTextField field = (JTextField)c;
+                field.setText("");
+            }
+            if(c instanceof JPanel)
+            {
+                JPanel p = (JPanel)c;
+                for(int j=0; j<p.getComponentCount(); j++)
+                {
+                    Component c2 = p.getComponent(j);
+                    if(c2 instanceof JTextField)
+                    {
+                        JTextField field = (JTextField)c2;
+                        field.setText("");
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_btLimparActionPerformed
 
     /**
      * @param args the command line arguments
@@ -403,6 +480,7 @@ public class FormPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel lbDadosAutomovel;
     private javax.swing.JLabel lbDataFabricacao;
     private javax.swing.JLabel lbImpostoPagar;
+    private javax.swing.JLabel lbMensagem;
     private javax.swing.JLabel lbModelo;
     private javax.swing.JLabel lbMotor;
     private javax.swing.JLabel lbPlaca;
